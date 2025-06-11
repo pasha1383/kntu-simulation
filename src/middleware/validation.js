@@ -5,6 +5,11 @@ exports.validateRegister = [
         .notEmpty().withMessage('Username is required.')
         .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long.')
         .trim().escape(),
+    body('studentId')
+        .isString().withMessage('Student ID must be a string.')
+        .trim()
+        .isLength({ min: 8, max: 8 }).withMessage('Student ID must be exactly 8 digits long.')
+        .matches(/^\d{8}$/).withMessage('Student ID must be an 8-digit number.'),
     body('email')
         .notEmpty().withMessage('Email is required.')
         .isEmail().withMessage('Invalid email format.')
