@@ -3,8 +3,12 @@ const app = express();
 const path = require('path');
 const connectDB = require('./config/db.config');
 const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes'); // Routes for general user actions and profile management
+
 const config = require('./config/main.config');
 const PORT = config.port || 5000;
+const { verifyToken } = require('./middleware/authJwt'); // Middleware for JWT verification
+
 
 connectDB()
 
@@ -29,6 +33,10 @@ app.get('/login', (req, res) => {
     res.render('login', { title: 'User Login', message: null });
 });
 
+app.use(verifyToken)
+
+app.use('/api', userRoutes)
+
 app.use((err, req, res, next) => {
     console.error(err.stack); // Log the stack trace for debugging
     res.status(500).send('Something broke on the server!'); // Send a generic error response
@@ -36,6 +44,8 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    console.log(`Access login page: http://localhost:${PORT}/login`);
+    console.log(`Access registration page: http://localhost:${PORT}/register.html`);
 });
 
 
