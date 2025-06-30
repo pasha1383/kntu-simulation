@@ -1,4 +1,4 @@
-// app/models/course.model.js
+// app/models/course.model.js (UPDATED)
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -29,13 +29,16 @@ const courseSchema = new Schema({
         required: true,
         min: 1
     },
-    // Array of student participants, referencing the User model
-    participants: [
+    participants: [ // Students enrolled in the course
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
-    ]
+    ],
+    isActive: { // NEW: To signify if the course is active in the current term
+        type: Boolean,
+        default: true
+    }
 }, {
     timestamps: true
 });

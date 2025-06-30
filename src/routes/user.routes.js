@@ -11,7 +11,9 @@ const {
     getAdminPanel,
     getProfessorCourses,
     getStudentGrades,
-    getSelfDetails // New controller for getting own user details
+    getSelfDetails,// New controller for getting own user details
+    getTermCourses, // NEW
+    getMyCourses    // NEW
 } = require('../controllers/user.controller');
 
 // Import the profile controller and its validation
@@ -41,6 +43,16 @@ router.get('/professor/courses', isProfessor, getProfessorCourses);
 
 // Route accessible only by users with 'student' role
 router.get('/student/grades', isStudent, getStudentGrades);
+
+// GET /api/dashboard/term-courses
+// For students: registered courses in current term (isActive)
+// For professors: teaching courses in current term (isActive)
+router.get('/dashboard/term-courses', getTermCourses);
+
+// GET /api/dashboard/my-courses
+// For students: all registered courses
+// For professors: all courses they have taught
+router.get('/dashboard/my-courses', getMyCourses);
 
 
 // Export the router to be used in server.js
