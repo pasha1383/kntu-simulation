@@ -4,6 +4,7 @@ const path = require('path');
 const connectDB = require('./config/db.config');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes'); // Routes for general user actions and profile management
+const courseRoutes = require('./routes/course.routes');
 
 const config = require('./config/main.config');
 const PORT = config.port || 5000;
@@ -36,6 +37,7 @@ app.get('/login', (req, res) => {
 app.use(verifyToken)
 
 app.use('/api', userRoutes)
+app.use('/api', courseRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err.stack); // Log the stack trace for debugging
